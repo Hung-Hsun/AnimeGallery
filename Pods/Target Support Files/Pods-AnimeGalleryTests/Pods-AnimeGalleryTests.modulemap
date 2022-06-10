@@ -1,0 +1,6 @@
+framework module Pods_AnimeGalleryTests {
+  umbrella header "Pods-AnimeGalleryTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

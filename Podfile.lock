@@ -1,0 +1,48 @@
+PODS:
+  - Kingfisher (7.2.3)
+  - MBProgressHUD (1.2.0)
+  - SwifterSwift (5.2.0):
+    - SwifterSwift/AppKit (= 5.2.0)
+    - SwifterSwift/CoreAnimation (= 5.2.0)
+    - SwifterSwift/CoreGraphics (= 5.2.0)
+    - SwifterSwift/CoreLocation (= 5.2.0)
+    - SwifterSwift/Dispatch (= 5.2.0)
+    - SwifterSwift/Foundation (= 5.2.0)
+    - SwifterSwift/MapKit (= 5.2.0)
+    - SwifterSwift/SceneKit (= 5.2.0)
+    - SwifterSwift/SpriteKit (= 5.2.0)
+    - SwifterSwift/StoreKit (= 5.2.0)
+    - SwifterSwift/SwiftStdlib (= 5.2.0)
+    - SwifterSwift/UIKit (= 5.2.0)
+  - SwifterSwift/AppKit (5.2.0)
+  - SwifterSwift/CoreAnimation (5.2.0)
+  - SwifterSwift/CoreGraphics (5.2.0)
+  - SwifterSwift/CoreLocation (5.2.0)
+  - SwifterSwift/Dispatch (5.2.0)
+  - SwifterSwift/Foundation (5.2.0)
+  - SwifterSwift/MapKit (5.2.0)
+  - SwifterSwift/SceneKit (5.2.0)
+  - SwifterSwift/SpriteKit (5.2.0)
+  - SwifterSwift/StoreKit (5.2.0)
+  - SwifterSwift/SwiftStdlib (5.2.0)
+  - SwifterSwift/UIKit (5.2.0)
+
+DEPENDENCIES:
+  - Kingfisher (~> 7.0)
+  - MBProgressHUD (~> 1.0)
+  - SwifterSwift (~> 5.0)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Kingfisher
+    - MBProgressHUD
+    - SwifterSwift
+
+SPEC CHECKSUMS:
+  Kingfisher: 8c2cbe0c11ea4d481542895112682a99e058468e
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
+
+PODFILE CHECKSUM: af0fc6a4dfeacc04695f2125555ec9e512805634
+
+COCOAPODS: 1.11.3
