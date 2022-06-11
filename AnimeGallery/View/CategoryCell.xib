@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryCell" id="gTV-IL-0wX" customClass="CategoryCell" customModule="AnimeGallery" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="120" height="66"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="120" height="66"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nx1-YX-EJm">
+                        <rect key="frame" x="9" y="16" width="102" height="34"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anime" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YI-6O-R15">
+                                <rect key="frame" x="2" y="8.5" width="98" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="0TP-va-Gs4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5YI-6O-R15" firstAttribute="leading" secondItem="nx1-YX-EJm" secondAttribute="leading" constant="2" id="1u7-uA-Fnx"/>
+                            <constraint firstAttribute="height" constant="34" id="3zr-F2-itf"/>
+                            <constraint firstItem="5YI-6O-R15" firstAttribute="centerY" secondItem="nx1-YX-EJm" secondAttribute="centerY" id="RVa-E4-3wm"/>
+                            <constraint firstAttribute="trailing" secondItem="5YI-6O-R15" secondAttribute="trailing" constant="2" id="btZ-I6-dTE"/>
+                            <constraint firstAttribute="width" constant="102" id="ulo-Hl-zSo"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="17"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="nx1-YX-EJm" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="6dy-ag-Avo"/>
+                <constraint firstItem="nx1-YX-EJm" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="FzQ-nZ-aHL"/>
+            </constraints>
+            <connections>
+                <outlet property="backView" destination="nx1-YX-EJm" id="D1x-D4-hEe"/>
+                <outlet property="title" destination="5YI-6O-R15" id="qA0-le-CIH"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="139.95535714285714"/>
+        </collectionViewCell>
+    </objects>
+</document>
