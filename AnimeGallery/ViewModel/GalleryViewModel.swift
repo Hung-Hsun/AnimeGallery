@@ -74,6 +74,12 @@ final class GalleryViewModel {
     
     var selectedCategory: Int = 0 {
         didSet {
+            if selectedCategory == 0 || selectedCategory == 1 {
+                self.setOptionTableViewHidden?(false)
+            } else {
+                self.setOptionTableViewHidden?(true)
+            }
+            
             self.reloadCategoryCollectionView?()
             self.reloadOptionTableView?()
             self.reloadComicArtTableView?()
@@ -88,29 +94,25 @@ final class GalleryViewModel {
     
     var animeType: AnimeType = .all {
         didSet {
-            self.reloadOptionTableView?()
-            self.reloadComicArtTableView?() //TODO: 重新取得資料，再重新載入。
+            animeOptionChanged()
         }
     }
     
     var animeFilter: AnimeFilter = .all {
         didSet {
-            self.reloadOptionTableView?()
-            self.reloadComicArtTableView?() //TODO: 重新取得資料，再重新載入。
+            animeOptionChanged()
         }
     }
     
     var mangaType: MangaType = .all {
         didSet {
-            self.reloadOptionTableView?()
-            self.reloadComicArtTableView?() //TODO: 重新取得資料，再重新載入。
+            mangaOptionChanged()
         }
     }
     
     var mangaFilter: MangaFilter = .all {
         didSet {
-            self.reloadOptionTableView?()
-            self.reloadComicArtTableView?() //TODO: 重新取得資料，再重新載入。
+            mangaOptionChanged()
         }
     }
     
@@ -152,6 +154,13 @@ final class GalleryViewModel {
         }
     }
     
+    var isTableViewScrolling = false
+    
+    var currentPage_anime: Int = 0
+    var hasNextPage_anime: Bool = true
+    var currentPage_manga: Int = 0
+    var hasNextPage_manga: Bool = true
+    
     var contentOffset_y_Anime: CGFloat = 0
     var contentOffset_y_Manga: CGFloat = 0
     var contentOffset_y_Favorite: CGFloat = 0
@@ -162,6 +171,7 @@ final class GalleryViewModel {
     var reloadOptionTableView: handler?
     var reloadComicArtTableView: handler?
     var presentWebView: ((_ url: String, _ title: String) -> Void)?
+    var setOptionTableViewHidden: ((_ isHidden: Bool) -> Void)?
     
     init() {
         
@@ -195,6 +205,81 @@ final class GalleryViewModel {
         self.mangaFilter = filter
     }
     
-    //MARK:  Query Comic Art List
+    //MARK: Query Comic Art List
+    func queryAnimeList(completion: (() -> Void)?) {
+        if !hasNextPage_anime { return }
+        
+        self.isLoading = true
+        RemoteServer.shared.getTopAnimes(type: self.animeType, filter: self.animeFilter, page: self.currentPage_anime + 1) { (result) in
+            
+            switch result {
+            case .failure(let err):
+                self.alertMessage = err.localizedDescription
+            case .success(let data):
+                if let page = data.currentPage {
+                    self.currentPage_anime = page
+                }
+                
+                self.hasNextPage_anime = data.hasNextPage
+                
+                if let list = data.data {
+                    self.animeList += list
+                }
+                
+                completion?()
+            }
+            
+            self.isLoading = false
+        }
+    }
     
+    func queryMangaList(completion: (() -> Void)?) {
+        if !hasNextPage_manga { return }
+        
+        self.isLoading = true
+        RemoteServer.shared.getTopMangas(type: self.mangaType, filter: self.mangaFilter, page: self.currentPage_manga + 1) { (result) in
+            
+            switch result {
+            case .failure(let err):
+                self.alertMessage = err.localizedDescription
+            case .success(let data):
+                if let page = data.currentPage {
+                    self.currentPage_manga = page
+                }
+                
+                self.hasNextPage_manga = data.hasNextPage
+                
+                if let list = data.data {
+                    self.mangaList += list
+                }
+                
+                completion?()
+            }
+            
+            self.isLoading = false
+        }
+    }
+    
+    //MARK:  Option Changed
+    fileprivate func animeOptionChanged() {
+        self.reloadOptionTableView?()
+        
+        self.currentPage_anime = 0
+        self.hasNextPage_anime = true
+        
+        self.queryAnimeList {
+            self.reloadComicArtTableView?()
+        }
+    }
+    
+    fileprivate func mangaOptionChanged() {
+        self.reloadOptionTableView?()
+        
+        self.currentPage_manga = 0
+        self.hasNextPage_manga = true
+        
+        self.queryMangaList {
+            self.reloadComicArtTableView?()
+        }
+    }
 }

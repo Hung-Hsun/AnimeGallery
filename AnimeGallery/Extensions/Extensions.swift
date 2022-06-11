@@ -9,6 +9,35 @@ import Foundation
 import UIKit
 import WebKit
 
+extension UIViewController {
+    enum NavigationItem {
+        case Left
+        case Right
+    }
+    
+    func setBlackDismissBackButton(action: Selector?, type: NavigationItem = .Left) {
+        var dissmissBtn = UIBarButtonItem()
+        switch type {
+        case .Left:
+            dissmissBtn = UIBarButtonItem(image: UIImage(named: "blackBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: action)
+            self.navigationItem.leftBarButtonItem = dissmissBtn
+        case .Right:
+            dissmissBtn = UIBarButtonItem(image: UIImage(named: "whiteClose")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: action)
+            self.navigationItem.rightBarButtonItem = dissmissBtn
+        }
+        self.navigationItem.leftBarButtonItem = dissmissBtn
+    }
+    
+    func setBlackBackButton() {
+        let backBtn = UIBarButtonItem(image: UIImage(named: "blackBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(self.backViewBtnFnc))
+        self.navigationItem.leftBarButtonItem = backBtn
+    }
+    
+    @objc func backViewBtnFnc() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
 extension WKWebView {
     func loadRequestFromString(urlString: String) {
         if let url = NSURL(string: urlString) {

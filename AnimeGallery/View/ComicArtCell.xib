@@ -24,14 +24,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="288" height="120"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4KP-4N-rvA">
-                                <rect key="frame" x="10" y="25" width="80" height="70"/>
+                                <rect key="frame" x="12" y="25" width="80" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="ADw-9i-J8I"/>
                                     <constraint firstAttribute="height" constant="70" id="SFe-Ca-5En"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spy x FamilySpy x FamilySpy x FamilySpy x Family" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Skc-5T-0fv">
-                                <rect key="frame" x="100" y="25" width="145" height="22"/>
+                                <rect key="frame" x="102" y="25" width="143" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="b6B-Rg-nNw"/>
                                 </constraints>
@@ -40,7 +40,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start: 2019-03-25" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FH9-Ek-LHO">
-                                <rect key="frame" x="100" y="53" width="145" height="18"/>
+                                <rect key="frame" x="102" y="53" width="143" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="0PG-DV-SdJ"/>
                                 </constraints>
@@ -49,7 +49,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End: 2020/12/31" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ER1-MN-xDS">
-                                <rect key="frame" x="100" y="73" width="145" height="18"/>
+                                <rect key="frame" x="102" y="73" width="143" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="cV7-SI-rOy"/>
                                 </constraints>
@@ -92,7 +92,7 @@
                             <constraint firstItem="J6M-bg-tjL" firstAttribute="leading" secondItem="Skc-5T-0fv" secondAttribute="trailing" id="Tg9-8h-OvX"/>
                             <constraint firstItem="J6M-bg-tjL" firstAttribute="top" secondItem="d9S-uU-M5L" secondAttribute="top" constant="3" id="ZRj-hq-NZ2"/>
                             <constraint firstItem="4KP-4N-rvA" firstAttribute="centerY" secondItem="d9S-uU-M5L" secondAttribute="centerY" id="Zuy-D0-xcP"/>
-                            <constraint firstItem="4KP-4N-rvA" firstAttribute="leading" secondItem="d9S-uU-M5L" secondAttribute="leading" constant="10" id="aCH-eJ-knh"/>
+                            <constraint firstItem="4KP-4N-rvA" firstAttribute="leading" secondItem="d9S-uU-M5L" secondAttribute="leading" constant="12" id="aCH-eJ-knh"/>
                             <constraint firstAttribute="trailing" secondItem="J6M-bg-tjL" secondAttribute="trailing" constant="3" id="clS-YU-wua"/>
                             <constraint firstItem="ER1-MN-xDS" firstAttribute="leading" secondItem="FH9-Ek-LHO" secondAttribute="leading" id="d92-Ig-mIe"/>
                             <constraint firstItem="FH9-Ek-LHO" firstAttribute="trailing" secondItem="Skc-5T-0fv" secondAttribute="trailing" id="n24-on-3QM"/>

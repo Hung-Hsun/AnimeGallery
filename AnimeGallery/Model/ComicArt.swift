@@ -8,6 +8,7 @@
 import UIKit
 
 class ComicArt: NSObject {
+    var malID: Int?
     var url: String?
     var imageUrl: String?
     var smallImageUrl: String?

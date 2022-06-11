@@ -26,6 +26,9 @@ class GalleryViewController: UIViewController {
         
         setView()
         initViewModel()
+        self.viewModel.queryAnimeList {
+            self.viewModel.queryMangaList {}
+        }
     }
 
     private func setView() {
@@ -55,7 +58,7 @@ class GalleryViewController: UIViewController {
                 
                 let isLoading = self.viewModel.isLoading
                 if isLoading {
-                    self.hudUtility.displayProgressHud(msg: "讀取中")
+                    self.hudUtility.displayProgressHud(msg: "Reading")
                 } else {
                     self.hudUtility.endHud()
                 }
@@ -101,6 +104,14 @@ class GalleryViewController: UIViewController {
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true, completion: nil)
+            }
+        }
+        
+        viewModel.setOptionTableViewHidden = { [weak self] (isHidden) in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                self.optionTableView.isHidden = isHidden
             }
         }
     }
@@ -182,8 +193,8 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
             let comicArt = viewModel.comicArtList[indexPath.row]
             let imageUrl = comicArt.imageUrl
             let title = comicArt.title
-            let start_date = comicArt.start_date?.components(separatedBy: "T")[0]
-            let end_date = comicArt.end_date?.components(separatedBy: "T")[0]
+            let start_date = "Start: " + (comicArt.start_date?.components(separatedBy: "T")[0] ?? "-")
+            let end_date = "End: " + (comicArt.end_date?.components(separatedBy: "T")[0] ?? "-")
             let rank = comicArt.rank
             let isFavorite = false //TODO: 修正！
             
@@ -212,7 +223,40 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == optionTableView {
+            if viewModel.selectedCategory == 0 || viewModel.selectedCategory == 1 {
+                return 44.0
+            } else {
+                return CGFloat.leastNormalMagnitude
+            }
+        } else if tableView == comicArtTableView {
+            return 128.0
+        }
+        
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == optionTableView {
+            if viewModel.selectedCategory == 0 || viewModel.selectedCategory == 1 {
+                return 44.0
+            } else {
+                return CGFloat.leastNormalMagnitude
+            }
+        } else if tableView == comicArtTableView {
+            return 128.0
+        }
+        
+        return 0
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        //Avoid continuous update while pull up
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            self.viewModel.isTableViewScrolling = false
+        }
+        
         if scrollView == comicArtTableView {
             if viewModel.selectedCategory == 0 { //Anime
                 viewModel.contentOffset_y_Anime = scrollView.contentOffset.y
@@ -220,6 +264,31 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
                 viewModel.contentOffset_y_Manga = scrollView.contentOffset.y
             } else { //Favorite
                 viewModel.contentOffset_y_Favorite = scrollView.contentOffset.y
+            }
+        }
+    }
+    
+    //MARK: Pull up reload
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !self.viewModel.isTableViewScrolling else {
+            return
+        }
+        
+        let scrollOffset = scrollView.contentOffset.y
+        let velocity = scrollView.panGestureRecognizer.velocity(in: scrollView).y
+        guard velocity < 0 else { //Pull up
+            return
+        }
+        
+        let pullUpOffset: CGFloat = 60.0
+        if (scrollView.contentSize.height < scrollView.frame.size.height && scrollOffset >= pullUpOffset) || (scrollOffset + scrollView.frame.size.height >= scrollView.contentSize.height + pullUpOffset) {
+            
+            self.viewModel.isTableViewScrolling = true
+            
+            if self.viewModel.selectedCategory == 0 {
+                self.viewModel.queryAnimeList(completion: nil)
+            } else if self.viewModel.selectedCategory == 1 {
+                self.viewModel.queryMangaList(completion: nil)
             }
         }
     }

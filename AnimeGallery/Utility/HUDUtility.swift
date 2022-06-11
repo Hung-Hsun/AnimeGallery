@@ -34,7 +34,7 @@ class HUDUtility: NSObject, HUDShowing, MBProgressHUDDelegate {
     func displayProgressHud(msg: String) {
         self.endHud()
 
-        if let view = self.topMostController()?.navigationController?.view {
+        if let view = self.topMostController()?.view {
             let hud = MBProgressHUD(view: view)
 
             hud.delegate = self

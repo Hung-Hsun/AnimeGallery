@@ -29,7 +29,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addWebView()
+        
+        self.setBlackDismissBackButton(action: #selector(self.dismissView),type: .Right)
+        self.addWebView()
     }
 
     fileprivate func addWebView() {
@@ -44,6 +46,10 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
             webview.loadRequestFromString(urlString: headerString + self.url)
         }
         self.webView = webview
+    }
+    
+    @objc func dismissView() {
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     //MARK:  WKNavigationDelegate
