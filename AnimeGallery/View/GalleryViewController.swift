@@ -29,6 +29,7 @@ class GalleryViewController: UIViewController {
         self.viewModel.queryAnimeList {
             self.viewModel.queryMangaList {}
         }
+        viewModel.loadFavoriteList()
     }
 
     private func setView() {
@@ -48,6 +49,16 @@ class GalleryViewController: UIViewController {
                 
                 if let msg = self.viewModel.alertMessage {
                     self.alertUtility.showAlert(msg: msg)
+                }
+            }
+        }
+        
+        viewModel.showHUDMessage = { [weak self] in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                if let msg = self.viewModel.hudMessage {
+                    self.hudUtility.showMessageOnly(msg, interval: 2.0)
                 }
             }
         }
@@ -189,16 +200,10 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else if tableView == comicArtTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: ComicArtCell.reusableId, for: indexPath) as! ComicArtCell
-            
+            cell.delegate = self
             let comicArt = viewModel.comicArtList[indexPath.row]
-            let imageUrl = comicArt.imageUrl
-            let title = comicArt.title
-            let start_date = "Start: " + (comicArt.start_date?.components(separatedBy: "T")[0] ?? "-")
-            let end_date = "End: " + (comicArt.end_date?.components(separatedBy: "T")[0] ?? "-")
-            let rank = comicArt.rank
-            let isFavorite = false //TODO: 修正！
-            
-            cell.setupCell(imageUrl: imageUrl, title: title, start_date: start_date, end_date: end_date, rank: rank, isFavorite: isFavorite)
+            let isFavorite = viewModel.isInFavoriteList(comicArt)
+            cell.setupCell(comicArt: comicArt, isFavorite: isFavorite)
             return cell
         }
         
@@ -350,5 +355,11 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
         nav.setNavigationBarAppearance(.Opaque)
         nav.modalPresentationStyle = .fullScreen
         self.present(nav, animated: true, completion: nil)
+    }
+}
+
+extension GalleryViewController: ComicArtCellDelegate {
+    func likeButtonClicked(comicArt: ComicArt) {
+        self.viewModel.addOrRemoveFavorite(comicArt)
     }
 }

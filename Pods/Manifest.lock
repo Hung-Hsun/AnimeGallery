@@ -1,6 +1,7 @@
 PODS:
   - Kingfisher (7.2.3)
   - MBProgressHUD (1.2.0)
+  - PKHUD (5.3.0)
   - SwifterSwift (5.2.0):
     - SwifterSwift/AppKit (= 5.2.0)
     - SwifterSwift/CoreAnimation (= 5.2.0)
@@ -30,19 +31,22 @@ PODS:
 DEPENDENCIES:
   - Kingfisher (~> 7.0)
   - MBProgressHUD (~> 1.0)
+  - PKHUD
   - SwifterSwift (~> 5.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Kingfisher
     - MBProgressHUD
+    - PKHUD
     - SwifterSwift
 
 SPEC CHECKSUMS:
   Kingfisher: 8c2cbe0c11ea4d481542895112682a99e058468e
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   SwifterSwift: 334181863c416882d97b7a60c05054d9e4d799e2
 
-PODFILE CHECKSUM: af0fc6a4dfeacc04695f2125555ec9e512805634
+PODFILE CHECKSUM: f3970cb007a7b15fa6f6ece8875170659a895d43
 
 COCOAPODS: 1.11.3

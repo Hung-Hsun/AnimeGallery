@@ -10,6 +10,7 @@
 		1A36634A285495E100326F24 /* RemoteServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A366349285495E100326F24 /* RemoteServer.swift */; };
 		1A36634C2854B95800326F24 /* AnimeTransferData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A36634B2854B95800326F24 /* AnimeTransferData.swift */; };
 		1A36634E2854C30100326F24 /* MangaTransferData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A36634D2854C30100326F24 /* MangaTransferData.swift */; };
+		1A366350285582B600326F24 /* NetworkDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A36634F285582B600326F24 /* NetworkDetector.swift */; };
 		1A4314CF2853294D000E9929 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4314CD2853294D000E9929 /* GalleryViewController.swift */; };
 		1A4314D02853294D000E9929 /* GalleryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A4314CE2853294D000E9929 /* GalleryViewController.xib */; };
 		1A4314D428532A4A000E9929 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4314D328532A4A000E9929 /* GalleryViewModel.swift */; };
@@ -66,6 +67,7 @@
 		1A366349285495E100326F24 /* RemoteServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServer.swift; sourceTree = "<group>"; };
 		1A36634B2854B95800326F24 /* AnimeTransferData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeTransferData.swift; sourceTree = "<group>"; };
 		1A36634D2854C30100326F24 /* MangaTransferData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaTransferData.swift; sourceTree = "<group>"; };
+		1A36634F285582B600326F24 /* NetworkDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDetector.swift; sourceTree = "<group>"; };
 		1A4314CD2853294D000E9929 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		1A4314CE2853294D000E9929 /* GalleryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryViewController.xib; sourceTree = "<group>"; };
 		1A4314D328532A4A000E9929 /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				1A366349285495E100326F24 /* RemoteServer.swift */,
+				1A36634F285582B600326F24 /* NetworkDetector.swift */,
 			);
 			path = NetWork;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				1ABD0A542854214200A51333 /* NSObject+ClassNameProtocol.swift in Sources */,
 				1ABC33F52852E73500111E99 /* AppDelegate.swift in Sources */,
 				1ABD0A5028541B8500A51333 /* WebViewController.swift in Sources */,
+				1A366350285582B600326F24 /* NetworkDetector.swift in Sources */,
 				1ABD0A582854243100A51333 /* Extensions.swift in Sources */,
 				1ABC33F72852E73500111E99 /* SceneDelegate.swift in Sources */,
 				1ABD0A422853522100A51333 /* CategoryCell.swift in Sources */,

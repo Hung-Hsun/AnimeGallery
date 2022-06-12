@@ -60,6 +60,12 @@ final class GalleryViewModel {
         }
     }
     
+    var hudMessage: String? {
+        didSet {
+            self.showHUDMessage?()
+        }
+    }
+    
     var isLoading: Bool = false {
         didSet {
             self.updateLoadingStatus?()
@@ -140,6 +146,13 @@ final class GalleryViewModel {
     
     var favoriteList: [ComicArt] = [] {
         didSet {
+            do {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: favoriteList, requiringSecureCoding: false)
+                UserDefaults.standard.set(data, forKey: "favoriteList")
+            } catch let err {
+                print("Save favorite list to UserDefaults error: \(err.localizedDescription)")
+            }
+            
             self.reloadComicArtTableView?()
         }
     }
@@ -166,6 +179,7 @@ final class GalleryViewModel {
     var contentOffset_y_Favorite: CGFloat = 0
     
     var showAlert: handler?
+    var showHUDMessage: handler?
     var updateLoadingStatus: handler?
     var reloadCategoryCollectionView: handler?
     var reloadOptionTableView: handler?
@@ -257,6 +271,40 @@ final class GalleryViewModel {
             }
             
             self.isLoading = false
+        }
+    }
+    
+    //MARK: Favorite
+    func addOrRemoveFavorite(_ comicArt: ComicArt) {
+        if self.isInFavoriteList(comicArt) {
+            self.favoriteList = self.favoriteList.filter {
+                $0.malID != comicArt.malID
+            }
+            self.hudMessage = "Removed from Favorite list"
+        } else {
+            self.favoriteList.append(comicArt)
+            self.hudMessage = "Added to Favorite list"
+        }
+    }
+    
+    func isInFavoriteList(_ comicArt: ComicArt) -> Bool {
+        for favorite in self.favoriteList {
+            if favorite.malID == comicArt.malID {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func loadFavoriteList() {
+        do {
+            guard let data = UserDefaults.standard.object(forKey: "favoriteList") as? Data else { return }
+            if let favoriteList = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Array<ComicArt> {
+                self.favoriteList = favoriteList
+            }
+        } catch let err {
+            print("Load favorite list from UserDefaults error: \(err.localizedDescription)")
         }
     }
     

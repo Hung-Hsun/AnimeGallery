@@ -8,6 +8,10 @@
 import UIKit
 import Kingfisher
 
+protocol ComicArtCellDelegate: AnyObject {
+    func likeButtonClicked(comicArt: ComicArt)
+}
+
 class ComicArtCell: UITableViewCell {
 
     @IBOutlet weak var backView: UIImageView!
@@ -17,6 +21,9 @@ class ComicArtCell: UITableViewCell {
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var rankLabel: UILabel!
+    
+    weak var delegate: ComicArtCellDelegate?
+    var comicArt: ComicArt?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +36,16 @@ class ComicArtCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setupCell(imageUrl: String?, title: String?, start_date: String?, end_date: String?, rank: Int?, isFavorite: Bool) {
+    func setupCell(comicArt: ComicArt, isFavorite: Bool) {
+        
+        self.comicArt = comicArt
+        
+        let imageUrl = comicArt.imageUrl
+        let title = comicArt.title
+        let start_date = "Start: " + (comicArt.start_date?.components(separatedBy: "T")[0] ?? "-")
+        let end_date = "End: " + (comicArt.end_date?.components(separatedBy: "T")[0] ?? "-")
+        let rank = comicArt.rank
+        
         self.pic.kf.setImage(with: URL(string: imageUrl), placeholder: UIImage(named: "picture"))
         self.title.text = title
         self.startDateLabel.text = start_date
@@ -49,7 +65,7 @@ class ComicArtCell: UITableViewCell {
     }
     
     @IBAction func like(_ sender: Any) {
-        
-        
+        guard let comicArt = comicArt else { return }
+        delegate?.likeButtonClicked(comicArt: comicArt)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 import MBProgressHUD
-import SwiftUI
+import PKHUD
 
 protocol HUDShowing {
     
@@ -18,6 +18,7 @@ class HUDUtility: NSObject, HUDShowing, MBProgressHUDDelegate {
     static let shared = HUDUtility()
     var progressHUD: MBProgressHUD?
     
+    //MBProgressHUD
     func endHud() {
         guard let hud = self.progressHUD else {
             return
@@ -50,6 +51,13 @@ class HUDUtility: NSObject, HUDShowing, MBProgressHUDDelegate {
         }
     }
     
+    //PKHUD
+    func showMessageOnly(_ message: String, interval: TimeInterval) {
+        HUD.dimsBackground = false
+        HUD.flash(.label(message), delay: interval)
+    }
+    
+    //Find top view controller
     func topMostController() -> UIViewController? {
         guard let window = UIApplication.shared.keyWindow, let rootViewController = window.rootViewController else {
             return nil
