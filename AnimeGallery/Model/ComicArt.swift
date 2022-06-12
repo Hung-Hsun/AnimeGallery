@@ -36,9 +36,15 @@ class ComicArt: NSObject, NSCoding {
     }
 
     func encode(with coder: NSCoder) {
-        guard let malID = malID, let url = url, let imageUrl = imageUrl, let smallImageUrl = smallImageUrl, let largeImageUrl = largeImageUrl, let title = title, let rank = rank, let start_date = start_date, let end_date = end_date else {
-            return
-        }
+        let malID = malID ?? 0
+        let url = url ?? ""
+        let imageUrl = imageUrl ?? ""
+        let smallImageUrl = smallImageUrl ?? ""
+        let largeImageUrl = largeImageUrl ?? ""
+        let title = title ?? ""
+        let rank = rank ?? 0
+        let start_date = start_date ?? ""
+        let end_date = end_date ?? ""
         
         coder.encode(malID, forKey: "malID")
         coder.encode(url, forKey: "url")

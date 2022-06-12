@@ -58,7 +58,7 @@ class GalleryViewController: UIViewController {
                 guard let self = self else { return }
                 
                 if let msg = self.viewModel.hudMessage {
-                    self.hudUtility.showMessageOnly(msg, interval: 2.0)
+                    self.hudUtility.showMessageOnly(msg, interval: 1.0)
                 }
             }
         }
