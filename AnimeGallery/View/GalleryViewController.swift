@@ -125,6 +125,14 @@ class GalleryViewController: UIViewController {
                 self.optionTableView.isHidden = isHidden
             }
         }
+        
+        viewModel.scrollComicArtTableViewToTop = { [weak self] () in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                
+                self.comicArtTableView.setContentOffset(.zero, animated: false)
+            }
+        }
     }
 }
 

@@ -186,6 +186,7 @@ final class GalleryViewModel {
     var reloadComicArtTableView: handler?
     var presentWebView: ((_ url: String, _ title: String) -> Void)?
     var setOptionTableViewHidden: ((_ isHidden: Bool) -> Void)?
+    var scrollComicArtTableViewToTop: handler?
     
     init() {
         
@@ -325,6 +326,7 @@ final class GalleryViewModel {
         self.hasNextPage_anime = true
         
         self.queryAnimeList {
+            self.scrollComicArtTableViewToTop?()
             self.reloadComicArtTableView?()
         }
     }
@@ -337,6 +339,7 @@ final class GalleryViewModel {
         self.hasNextPage_manga = true
         
         self.queryMangaList {
+            self.scrollComicArtTableViewToTop?()
             self.reloadComicArtTableView?()
         }
     }
