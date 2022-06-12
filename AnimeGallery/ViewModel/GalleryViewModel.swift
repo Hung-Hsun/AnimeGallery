@@ -236,7 +236,11 @@ final class GalleryViewModel {
                 
                 self.hasNextPage_anime = data.hasNextPage
                 
-                if let list = data.data {
+                if var list = data.data {
+                    list.sort {
+                        guard let rank0 = $0.rank, let rank1 = $1.rank else { return false }
+                        return rank0 < rank1
+                    }
                     self.animeList += list
                 }
                 
@@ -263,7 +267,11 @@ final class GalleryViewModel {
                 
                 self.hasNextPage_manga = data.hasNextPage
                 
-                if let list = data.data {
+                if var list = data.data {
+                    list.sort {
+                        guard let rank0 = $0.rank, let rank1 = $1.rank else { return false }
+                        return rank0 < rank1
+                    }
                     self.mangaList += list
                 }
                 
@@ -312,6 +320,7 @@ final class GalleryViewModel {
     fileprivate func animeOptionChanged() {
         self.reloadOptionTableView?()
         
+        self.animeList = []
         self.currentPage_anime = 0
         self.hasNextPage_anime = true
         
@@ -323,6 +332,7 @@ final class GalleryViewModel {
     fileprivate func mangaOptionChanged() {
         self.reloadOptionTableView?()
         
+        self.mangaList = []
         self.currentPage_manga = 0
         self.hasNextPage_manga = true
         

@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol NetworkSession {
+    func loadData(from request: URLRequest,
+                  completionHandler: @escaping (Data?, Error?) -> Void)
+}
+
 protocol QueryComicArtProtocol {
     func getTopAnimes(type: AnimeType, filter: AnimeFilter, page: Int, limit: Int, completion: @escaping (Result<AnimeTransferData, Error>) -> Void)
     func getTopMangas(type: MangaType, filter: MangaFilter, page: Int, limit: Int, completion: @escaping (Result<MangaTransferData, Error>) -> Void)
@@ -15,7 +20,13 @@ protocol QueryComicArtProtocol {
 class RemoteServer: NSObject, QueryComicArtProtocol {
     
     static let shared = RemoteServer()
+    private let session: NetworkSession
+    
     let alertUtility = AlertUtility.shared
+    
+    init(session: NetworkSession = URLSession.shared) {
+        self.session = session
+    }
     
     enum ServerUrl: String {
         
@@ -40,17 +51,10 @@ class RemoteServer: NSObject, QueryComicArtProtocol {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30)
         request.httpMethod = "GET"
         
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration)
-        let dataTask = session.dataTask(with: request) { (data, _, error) in
+        session.loadData(from: request) { data, error in
             if error == nil {
                 if let data = data {
-                    /*
-                     var str: String? = nil
-                     str = String(data: data, encoding: String.Encoding.utf8)
-                     print(str ?? "")
-                     */
-
+                    
                     guard let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments), let dict = jsonObj as? [String: AnyObject] else {
                         return
                     }
@@ -99,8 +103,6 @@ class RemoteServer: NSObject, QueryComicArtProtocol {
                 completion(.failure(error!))
             }
         }
-
-        dataTask.resume()
     }
     
     func getTopMangas(type: MangaType, filter: MangaFilter, page: Int, limit: Int = 20, completion: @escaping (Result<MangaTransferData, Error>) -> Void) {
@@ -115,17 +117,10 @@ class RemoteServer: NSObject, QueryComicArtProtocol {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30)
         request.httpMethod = "GET"
         
-        let configuration = URLSessionConfiguration.default
-        let session = URLSession(configuration: configuration)
-        let dataTask = session.dataTask(with: request) { (data, _, error) in
+        session.loadData(from: request) { data, error in
             if error == nil {
                 if let data = data {
-                    /*
-                     var str: String? = nil
-                     str = String(data: data, encoding: String.Encoding.utf8)
-                     print(str ?? "")
-                     */
-
+                    
                     guard let jsonObj = try? JSONSerialization.jsonObject(with: data, options: .allowFragments), let dict = jsonObj as? [String: AnyObject] else {
                         return
                     }
@@ -174,8 +169,6 @@ class RemoteServer: NSObject, QueryComicArtProtocol {
                 completion(.failure(error!))
             }
         }
-
-        dataTask.resume()
     }
     
     //Private functions
@@ -191,5 +184,16 @@ class RemoteServer: NSObject, QueryComicArtProtocol {
         }
 
         return nil
+    }
+}
+
+extension URLSession: NetworkSession {
+    func loadData(from request: URLRequest,
+                  completionHandler: @escaping (Data?, Error?) -> Void) {
+        let task = dataTask(with: request) { (data, _, error) in
+            completionHandler(data, error)
+        }
+
+        task.resume()
     }
 }

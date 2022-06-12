@@ -9,28 +9,76 @@ import XCTest
 @testable import AnimeGallery
 
 class AnimeGalleryTests: XCTestCase {
-
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    func testGetTopAnimes() throws {
+        
+        let session = NetworkSessionMock()
+        let server = RemoteServer(session: session)
+        
+        let dic = [
+            "pagination": [
+                "has_next_page": true,
+                "current_page": 1
+            ],
+            "data": [[
+                "mal_id": 50265,
+                "url": "https://myanimelist.net/anime/50265/Spy_x_Family",
+                "images": [
+                    "jpg": [
+                        "image_url": "https://cdn.myanimelist.net/images/anime/1441/122795.jpg",
+                        "small_image_url": "https://cdn.myanimelist.net/images/anime/1441/122795t.jpg",
+                        "large_image_url": "https://cdn.myanimelist.net/images/anime/1441/122795l.jpg"
+                    ]
+                ],
+                "title": "Spy x Family",
+                "type": "TV",
+                "aired": [
+                    "from": "2022-04-09T00:00:00+00:00",
+                    "to": "2022-06-30T00:00:00+00:00"
+                ],
+                "rank": 11
+            ]]] as [String : Any]
+        
+        let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+        
+        session.data = jsonData
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        server.getTopAnimes(type: .all, filter: .all, page: 1) { (result) in
+            switch result {
+            case .failure(_):
+                XCTFail()
+            case .success(let data):
+                if let page = data.currentPage {
+                    XCTAssert(page == 1, "Returned currentPage not correct")
+                }
+                
+                XCTAssert(data.hasNextPage == true, "Returned hasNextPage not correct")
+                XCTAssert(data.data?.first?.title == "Spy x Family", "Returned title not correct")
+            }
         }
     }
 
+    func testPerformanceExample() throws {
+        self.measure {
+        }
+    }
+
+}
+
+class NetworkSessionMock: NetworkSession {
+    var data: Data?
+    var error: Error?
+
+    func loadData(from url: URLRequest,
+                  completionHandler: @escaping (Data?, Error?) -> Void) {
+        completionHandler(data, error)
+    }
 }
